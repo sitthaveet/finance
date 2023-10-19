@@ -54,8 +54,8 @@ def index():
     total = current_cash
     for symbol in symbols:
 
-        shares_bought = db.execute("SELECT SUM(shares) FROM transactions WHERE user_id = :userID AND symbol = :symbol AND type = 'buy'", userID = userID, symbol = symbol['symbol'])
-        shares_sold = db.execute("SELECT SUM(shares) FROM transactions WHERE user_id = :userID AND symbol = :symbol AND type = 'sell'", userID = userID, symbol = symbol['symbol'])
+        shares_bought = db.execute("SELECT SUM(shares) AS sum FROM transactions WHERE user_id = :userID AND symbol = :symbol AND type = 'buy'", userID = userID, symbol = symbol['symbol'])
+        shares_sold = db.execute("SELECT SUM(shares) AS sum FROM transactions WHERE user_id = :userID AND symbol = :symbol AND type = 'sell'", userID = userID, symbol = symbol['symbol'])
         if shares_sold[0]['sum'] is None:
             shares_sold[0]['sum'] = 0
         net_shares = shares_bought[0]['sum'] - shares_sold[0]['sum']
